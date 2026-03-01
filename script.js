@@ -21,6 +21,19 @@ document.querySelector('[data-add-request-header-btn]')
 queryParamsContainer.append(createKeyValuePair())
 requestHeadersContainer.append(createKeyValuePair())
 
+form.addEventListener('submit', e => {
+    e.preventDefault()
+
+    axios({
+        url: form.querySelector('[data-url]').value,
+        method: form.querySelector('[data-method]').value,
+        params: keyValuePairsTooObjects(queryParamsContainer),
+        headers: keyValuePairsTooObjects(requestHeadersContainer)
+    }).then(response => {
+        console.log(response)
+    })
+})
+
 function createKeyValuePair() {
     const element = keyValueTemplate.content.cloneNode(true)
     element.querySelector('[data-remove-btn]')
@@ -28,4 +41,17 @@ function createKeyValuePair() {
           e.target.closest('[data-key-value-pair]').remove()
       })
     return element
+}
+
+function keyValuePairsTooObjects(container) {
+    const pairs = container.querySelectorAll('[data-key-value-pair]')
+    return [...pairs].reduce((data, pair) => {
+        const key = pair.querySelector('[data-key]').value
+        const value = pair.querySelector('[data-value]').value
+
+        if (key) {
+            data[key] = value
+        }
+        return data
+    }, {}) 
 }
