@@ -8,16 +8,16 @@
 </head>
 <body>
     <div class="p-4">
-        <form action="">
+        <form data-form>
             <div class="input-group mb-4">
-                <select class="form-select flex-grow-0">
+                <select class="form-select flex-grow-0" data-method>
                     <option value="GET" selected>GET</option>
                     <option value="POST">POST</option>
                     <option value="PUT">PUT</option>
                     <option value="PATCH">PATCH</option> 
                     <option value="DELETE">DELETE</option>
                 </select>
-                <input required type="url" class="form-control" placeholder="https://www.example.com">
+                <input data-url required type="url" class="form-control" placeholder="https://www.example.com">
                 <button type="submit" class="btn btn-primary">Send</button>
             </div>
 

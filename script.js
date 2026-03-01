@@ -1,5 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import axios from 'axios'
+
+const form = document.querySelector('[data-form]')
 
 const queryParamsContainer = document.querySelector('[data-add-query-params]')
 const requestHeadersContainer = document.querySelector('[data-add-request-headers]')
