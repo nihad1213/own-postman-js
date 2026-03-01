@@ -8,6 +8,9 @@ const queryParamsContainer = document.querySelector('[data-add-query-params]')
 const requestHeadersContainer = document.querySelector('[data-add-request-headers]')
 const keyValueTemplate = document.querySelector('[data-key-value-template]')
 
+const startTime = Date.now()
+
+
 document.querySelector('[data-add-query-param-btn]')
   .addEventListener('click', () => {
       queryParamsContainer.append(createKeyValuePair())
@@ -30,7 +33,20 @@ form.addEventListener('submit', e => {
         params: keyValuePairsTooObjects(queryParamsContainer),
         headers: keyValuePairsTooObjects(requestHeadersContainer)
     }).then(response => {
-        console.log(response)
+        const duration = Date.now() - startTime
+        const size = JSON.stringify(response.data).length
+    
+        document.querySelector('[data-response-status]').textContent = response.status
+        document.querySelector('[data-response-time]').textContent = `${duration}ms`
+        document.querySelector('[data-response-size]').textContent = `${size}B`
+        document.querySelector('[data-response-body]').textContent = JSON.stringify(response.data, null, 2)
+        document.querySelector('[data-response-headers]').textContent = JSON.stringify(response.headers, null, 2)
+    }).catch(error => {
+        if (error.response) {
+            document.querySelector('[data-response-status]').textContent = error.response.status
+            document.querySelector('[data-response-body]').textContent = JSON.stringify(error.response.data, null, 2)
+            document.querySelector('[data-response-headers]').textContent = JSON.stringify(error.response.headers, null, 2)
+        }
     })
 })
 
